@@ -1,3 +1,7 @@
+provider "aws" {
+    region = "us-east-2"
+}
+
 terraform {
     backend "s3" {
         bucket = "terraform-up-and-running-jorik"
@@ -10,6 +14,6 @@ terraform {
 }
 
 resource "aws_instance" "example" {
-    ami = "ami-oc55b159cbfafe1f0"
+    ami = "ami-0c55b159cbfafe1f0"
     instance_type = "t2.micro"
 }
