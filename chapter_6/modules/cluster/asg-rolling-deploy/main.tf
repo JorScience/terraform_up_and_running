@@ -2,8 +2,7 @@ resource "aws_launch_configuration" "example" {
     image_id             = var.ami
     instance_type        = var.instance_type
     security_groups      = [aws_security_group.instance.id]
-
-    user_data = data.template_file.user_data.rendered
+    user_data = var.user_data
 
     lifecycle {
         create_before_destroy = true
@@ -12,11 +11,12 @@ resource "aws_launch_configuration" "example" {
 
 resource "aws_autoscaling_group" "example" {
     name = "${var.cluster_name}-${aws_launch_configuration.example.name}"
-    launch_configuration = aws_launch_configuration.example.name
-    vpc_zone_identifier = data.aws_subnet_ids.default.ids
 
-    target_group_arns = [aws_lb_target_group.asg.arn]
-    health_check_type = "ELB"
+    launch_configuration = aws_launch_configuration.example.name
+    vpc_zone_identifier = var.subnet_ids
+
+    target_group_arns = var.target_group_arns
+    health_check_type = var.health_check_type
 
     min_size = var.min_size
     max_size = var.max_size
