@@ -116,3 +116,8 @@ resource "aws_cloudwatch_metric_alarm" "low_cpu_credit_balance" {
     threshold = 10
     unit = "Count"
 }
+
+locals {
+  tcp_protocol = "tcp"
+  all_ips      = ["0.0.0.0/0"]
+}
